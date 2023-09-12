@@ -1,4 +1,6 @@
 # SpeakLocal
+![image](https://github.com/ill13/SpeakLocal/assets/10509740/1adac786-93ce-4b76-b8fa-0c36ad3f2e56)
+
 A TTS [text-to-speech] extension for oobabooga text WebUI
 
 ```silero_tts``` is great, but it seems to have a word limit, so I made **SpeakLocal**. 
@@ -23,4 +25,5 @@ Now clone this repo:
 
 Finally enable the extension in the *session* tab
 
-[SCREENSHOT HERE]
+![image](https://github.com/ill13/SpeakLocal/assets/10509740/f7f2844d-537d-426a-8110-0ce674e05d11)
+
