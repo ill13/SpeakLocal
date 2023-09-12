@@ -17,10 +17,12 @@ import os
 myprompt="no data"
 
 params = {
+    "name": "SpeakLocal",
     "display_name": "SpeakLocal",
     "activate": True,
     "custom string": "n/a",
 }
+
 
 class _TTS:
 
@@ -44,8 +46,8 @@ def speak_text(string):
     mydate=int(time.time())
     tmp_string=string.replace(" ","_")
     
-    if not Path('extensions/SpeakLocal/output').exists():
-        Path('extensions/SpeakLocal/output').mkdir()
+    if not Path(f'extensions/{params["name"]}/output').exists():
+        Path(f'extensions/{params["name"]}/output').mkdir()
     
     filename_length=16    
     wav_file = os.path.dirname(__file__)+f'/output/{tmp_string[:filename_length]}_{mydate}.wav'
@@ -63,7 +65,7 @@ def speak_text(string):
     ffmpeg.input(wav_file).output(output_file, audio_bitrate='18k', loglevel="quiet" ).run()
     
     # A regular 'os.path' wont work with 'as_posix()', so use 'Path()'
-    audio_file = Path(f'extensions/speak_text/output/{tmp_string[:filename_length]}_{mydate}.mp3')
+    audio_file = Path(f'extensions/{params["name"]}/output/{tmp_string[:filename_length]}_{mydate}.mp3')
     
     string = f'<audio src="file/{audio_file.as_posix()}" controls></audio>'
     string += f'\n\n{original_string}'
