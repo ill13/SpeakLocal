@@ -44,8 +44,8 @@ def speak_text(string):
     mydate=int(time.time())
     tmp_string=string.replace(" ","_")
     
-    if not Path('extensions/speak_text/output').exists():
-        Path('extensions/speak_text/output').mkdir()
+    if not Path('extensions/SpeakLocal/output').exists():
+        Path('extensions/SpeakLocal/output').mkdir()
     
     filename_length=16    
     wav_file = os.path.dirname(__file__)+f'/output/{tmp_string[:filename_length]}_{mydate}.wav'
