@@ -3,15 +3,16 @@
 
 A TTS [text-to-speech] extension for oobabooga text WebUI
 
-```silero_tts``` is great, but it seems to have a word limit, so I made **SpeakLocal**. 
-
-This extension re-encodes the locally generated .WAV file to an .MP3 and pre-pends a media player to the text output field.
-
 - 100% offline
 - No AI
 - Low CPU
 - Low network bandwidth usage
 - No word limit
+
+```silero_tts``` is great, but it seems to have a word limit, so I made **SpeakLocal**. 
+
+This extension uses *pyttsx4* for speech generation and *ffmpeg* for audio conversio. *Pyttsx4* uses the native TTS abilities of the host machine (Linux, MacOS, Windows) so you shouldn't need to install anything else for this to work. This extension re-encodes the locally generated .WAV file to an .MP3 and pre-pends a media player to the text output field. The .MP3 encoding is set to ~18kbps compression so the output file is roughly 1 kilobyte for each second of audio. This can be changed, however it's set low to conserve bandwidth when using mobile data. 
+
 
 ### How to use:
 
@@ -22,6 +23,12 @@ Fire up a command prompt | shell:
 Now clone this repo:
 
 ```git clone https://github.com/ill13/SpeakLocal```
+
+You may have to do:
+
+```pip install -r requirements```
+
+...If *pytssx4* and *ffmpeg-python* are not installed.
 
 Finally enable the extension in the *session* tab
 
