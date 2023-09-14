@@ -32,6 +32,7 @@ class _TTS:
         self.engine = pyttsx4.init()
         voices = self.engine.getProperty('voices') 
         self.engine.setProperty('voice', voices[1].id) # Set playback to the feminine voice
+        #self.engine.setProperty('voice', voices[2].id) # Set playback to a freshly installed [french] voice
 
 
     def start(self,text_,wav_file_):
