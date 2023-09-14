@@ -31,7 +31,8 @@ class _TTS:
     def __init__(self):
         self.engine = pyttsx4.init()
         voices = self.engine.getProperty('voices') 
-        self.engine.setProperty('voice', voices[1].id) # Set playback to the feminine voice
+        self.engine.setProperty('voice', voices[0].id) # Set playback to the default voice
+        #self.engine.setProperty('voice', voices[1].id) # Set playback to the feminine voice
         #self.engine.setProperty('voice', voices[2].id) # Set playback to a freshly installed [french] voice
 
 
