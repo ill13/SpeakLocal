@@ -16,26 +16,37 @@ import re
 
 
 myprompt="no data"
+host_voices=[]
+selected_voice=0
 
 params = {
     "name": "SpeakLocal",
     "display_name": "SpeakLocal",
     "activate": True,
+    'autoplay': True,
     "audio_bitrate": "18k",
 }
 
 
+
 class _TTS:
 
+    global host_voices
     engine = None
     rate = None
     def __init__(self):
         self.engine = pyttsx4.init()
         voices = self.engine.getProperty('voices') 
-        self.engine.setProperty('voice', voices[0].id) # Set playback to the default voice
-        #self.engine.setProperty('voice', voices[1].id) # Set playback to the feminine voice
-        #self.engine.setProperty('voice', voices[2].id) # Set playback to a freshly installed [french] voice
+        self.engine.setProperty('voice', voices[selected_voice].id) # Set playback to the new selected voice
+        # self.engine.setProperty('voice', voices[0].id) # Set playback to the default voice
+        # self.engine.setProperty('voice', voices[1].id) # Set playback to the feminine voice
+        # self.engine.setProperty('voice', voices[2].id) # Set playback to a freshly installed [french] voice
 
+    def get_voices(self):
+        voices = self.engine.getProperty('voices') 
+        for voice in voices:
+            print(voice.name)
+            host_voices.append(voice.name)
 
     def start(self,text_,wav_file_):
         self.engine.save_to_file(text_, wav_file_) 
@@ -84,11 +95,31 @@ def speak_text(string):
     return string
     
 
+def update_voice_list():
+    tts = _TTS()
+    tts.get_voices()
+    del(tts)
+   
     
     
-def save_audio():
-    pass
+
+def setup():
+    """
+    Gets executed only once, when the extension is imported.
+    """    
+    tts = _TTS()
+    tts.get_voices()
+    del(tts)
     
+def history_modifier(history):
+    # Remove autoplay from the last reply
+    if len(history['internal']) > 0:
+        history['visible'][-1] = [
+            history['visible'][-1][0],
+            history['visible'][-1][1].replace('controls autoplay>', 'controls>')
+        ]
+
+    return history
 
 def input_modifier(string):
     """
@@ -114,23 +145,24 @@ def output_modifier(string):
 
     return string
 
-def bot_prefix_modifier(string):
-    """
-    This function is only applied in chat mode. It modifies
-    the prefix text for the Bot and can be used to bias its
-    behavior.
-    """
-
-    # if params['activate'] == True:
-    #     return f'{string} {params["custom string"].strip()} '
-    # else:
-    #     return string
-    return string
+def select_voice(option):
+    index=host_voices.index(option)
+    print(option)
+    print(index)
+    global selected_voice
+    selected_voice=index
 
 def ui():
-    # Gradio elements
-    activate = gr.Checkbox(value=params['activate'], label='Activate SpeakText')
+    with gr.Accordion("SpeakLocal"):
+        
+        activate = gr.Checkbox(value=params['activate'], label='Activate SpeakLocal')
+        get_voices = gr.Button("Update installed voices")
+        cb_voices=gr.Radio([hv for hv in host_voices],label="Voices")
+            
+   
    
     # Event functions to update the parameters in the backend
     activate.change(lambda x: params.update({"activate": x}), activate, None)
+    cb_voices.change(fn=select_voice,inputs=cb_voices)
+    get_voices.click(update_voice_list)
 
