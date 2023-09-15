@@ -95,10 +95,10 @@ def speak_text(string):
     return string
     
 
-def update_voice_list():
-    tts = _TTS()
-    tts.get_voices()
-    del(tts)
+# def update_voice_list():
+#     tts = _TTS()
+#     tts.get_voices()
+#     del(tts)
    
     
     
@@ -156,7 +156,7 @@ def ui():
     with gr.Accordion("SpeakLocal"):
         
         activate = gr.Checkbox(value=params['activate'], label='Activate SpeakLocal')
-        get_voices = gr.Button("Update installed voices")
+        #get_voices = gr.Button("Update installed voices")
         cb_voices=gr.Radio([hv for hv in host_voices],label="Voices")
             
    
@@ -164,5 +164,5 @@ def ui():
     # Event functions to update the parameters in the backend
     activate.change(lambda x: params.update({"activate": x}), activate, None)
     cb_voices.change(fn=select_voice,inputs=cb_voices)
-    get_voices.click(update_voice_list)
+    #get_voices.click(update_voice_list)
 
