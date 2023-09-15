@@ -9,6 +9,7 @@ import pyttsx4
 #import pyttsx3
 import ffmpeg
 import os
+import re
 
 
 #You'll need to install pyttsx4 and ffmpeg
@@ -20,7 +21,7 @@ params = {
     "name": "SpeakLocal",
     "display_name": "SpeakLocal",
     "activate": True,
-    "custom string": "n/a",
+    "audio_bitrate": "18k",
 }
 
 
@@ -44,6 +45,8 @@ class _TTS:
 def speak_text(string):
     original_string=string
     string=html.unescape(string)
+    # first try to remove special characters for issue #2
+    string = re.sub('[^A-z0-9 -]', '', string).title()
     mydate=int(time.time())
     tmp_string=string.replace(" ","_")
     
@@ -63,7 +66,7 @@ def speak_text(string):
     
     # Convert the .wav to .mp3 | Safari doesn't support .ogg
     # Using a low audio bitrate so you don't use up all your mobile data!
-    ffmpeg.input(wav_file).output(output_file, audio_bitrate='18k', loglevel="quiet" ).run()
+    ffmpeg.input(wav_file).output(output_file, audio_bitrate=params["audio_bitrate"], loglevel="quiet" ).run()
     
     # A regular 'os.path' wont work with 'as_posix()', so use 'Path()'
     audio_file = Path(f'extensions/{params["name"]}/output/{tmp_string[:filename_length]}_{mydate}.mp3')
