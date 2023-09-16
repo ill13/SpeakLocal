@@ -37,3 +37,13 @@ Finally enable the extension in the *session* tab
 
 ![image](https://github.com/ill13/SpeakLocal/assets/10509740/f7f2844d-537d-426a-8110-0ce674e05d11)
 
+
+### 2023-09-15
+
+More audio options added.
+
+- Voice selection
+- Speech rate
+- Bitrate
+
+![image](https://github.com/ill13/SpeakLocal/assets/10509740/11d9d652-7bdc-469f-a5a4-3e072e293338)
