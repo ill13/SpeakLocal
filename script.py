@@ -18,6 +18,8 @@ import re
 myprompt="no data"
 host_voices=[]
 selected_voice=0
+selected_bitrate='18k'
+speech_rate=0
 
 params = {
     "name": "SpeakLocal",
@@ -25,6 +27,7 @@ params = {
     "activate": True,
     'autoplay': True,
     "audio_bitrate": "18k",
+    "bitrates": ['18k','48k','96k','128k']
 }
 
 
@@ -41,6 +44,8 @@ class _TTS:
         # self.engine.setProperty('voice', voices[0].id) # Set playback to the default voice
         # self.engine.setProperty('voice', voices[1].id) # Set playback to the feminine voice
         # self.engine.setProperty('voice', voices[2].id) # Set playback to a freshly installed [french] voice
+        rate = self.engine.getProperty('rate')
+        self.engine.setProperty('rate', rate + speech_rate)
 
     def get_voices(self):
         voices = self.engine.getProperty('voices') 
@@ -78,7 +83,7 @@ def speak_text(string):
     
     # Convert the .wav to .mp3 | Safari doesn't support .ogg
     # Using a low audio bitrate so you don't use up all your mobile data!
-    ffmpeg.input(wav_file).output(output_file, audio_bitrate=params["audio_bitrate"], loglevel="quiet" ).run()
+    ffmpeg.input(wav_file).output(output_file, audio_bitrate=selected_bitrate, loglevel="quiet" ).run()
     
     # A regular 'os.path' wont work with 'as_posix()', so use 'Path()'
     audio_file = Path(f'extensions/{params["name"]}/output/{tmp_string[:filename_length]}_{mydate}.mp3')
@@ -94,15 +99,6 @@ def speak_text(string):
     
     return string
     
-
-# def update_voice_list():
-#     tts = _TTS()
-#     tts.get_voices()
-#     del(tts)
-   
-    
-    
-
 def setup():
     """
     Gets executed only once, when the extension is imported.
@@ -146,23 +142,50 @@ def output_modifier(string):
     return string
 
 def select_voice(option):
+    #print(option)
+   # option=find_match(host_voices,option)
     index=host_voices.index(option)
-    print(option)
-    print(index)
+  #  print(option)
+  #  print(index)
     global selected_voice
     selected_voice=index
+    
+def select_bitrate(option):
+    index=params['bitrates'].index(option)
+    # print(option)
+    # print(index)
+    global selected_bitrate
+    selected_bitrate=option
+    
+def set_speed(option):
+    pass
+    global speech_rate
+    speech_rate=option
+
+# def find_match(string_list, wanted):
+#     for string in string_list:
+#         if string.contains(wanted):
+#             return string
+#     return None
+
 
 def ui():
     with gr.Accordion("SpeakLocal"):
         
         activate = gr.Checkbox(value=params['activate'], label='Activate SpeakLocal')
         #get_voices = gr.Button("Update installed voices")
-        cb_voices=gr.Radio([hv for hv in host_voices],label="Voices")
+       # cb_voices=gr.Radio([hv.replace('Microsoft','').replace('Desktop','') for hv in host_voices],label="Voices",value=host_voices[0].replace('Microsoft','').replace('Desktop',''))
+        cb_voices=gr.Radio([hv for hv in host_voices],label="Voices",value=host_voices[0])
+        sl_rate= gr.Slider(-50,50,value=0,step=1,label="Speech Rate")
+        cb_bitrate=gr.Radio([br for br in params['bitrates']],label="Bitrates",value=params['audio_bitrate'])
+        
             
    
    
     # Event functions to update the parameters in the backend
     activate.change(lambda x: params.update({"activate": x}), activate, None)
     cb_voices.change(fn=select_voice,inputs=cb_voices)
+    cb_bitrate.change(fn=select_bitrate,inputs=cb_bitrate)
+    sl_rate.change(fn=set_speed,inputs=sl_rate)
     #get_voices.click(update_voice_list)
 
