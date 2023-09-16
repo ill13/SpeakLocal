@@ -42,8 +42,8 @@ Finally enable the extension in the *session* tab
 
 More audio options added.
 
-- Voice selection
-- Speech rate
-- Bitrate
+- Voice selection: An enumerated list of TTS voices that are installed on the host.
+- Speech rate: Speed up or slow down how fast the words are spoken
+- Bitrate: Ability to adjust sound quality. Beware, higher bitrate means more data used!
 
 ![image](https://github.com/ill13/SpeakLocal/assets/10509740/11d9d652-7bdc-469f-a5a4-3e072e293338)
