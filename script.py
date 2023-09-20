@@ -63,7 +63,9 @@ def speak_text(string):
     original_string=string
     string=html.unescape(string)
     # first try to remove special characters for issue #2
-    string = re.sub('[^A-z0-9 -]', '', string).title()
+    # string = re.sub('[^A-z0-9 -]', '', string).title()
+    # Second try to accommodate special characters for issue #4
+    string = re.sub(r'[^\w\s-]', '', string).title()
     mydate=int(time.time())
     tmp_string=string.replace(" ","_")
     
