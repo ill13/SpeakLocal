@@ -1,2 +1,2 @@
 pyttsx4
-ffmpeg
+ffmpeg-python
