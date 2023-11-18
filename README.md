@@ -29,7 +29,7 @@ Now clone this repo:
 
 You may have to do:
 
-```pip install -r requirements```
+```pip install -r requirements.txt```
 
 ...If *pytssx4* and *ffmpeg-python* are not installed.
 
