@@ -37,6 +37,19 @@ Finally enable the extension in the *session* tab
 
 ![image](https://github.com/ill13/SpeakLocal/assets/10509740/f7f2844d-537d-426a-8110-0ce674e05d11)
 
+### 2024-02-05
+
+I'm not 100% happy with this answer, but it works for now
+
+```
+pip uninstall ffmpeg
+pip uninstall ffmpeg-python
+pip install ffmpeg-python
+```
+On Windows 10, make sure *ffmpeg.exe* in in your path
+![image](https://github.com/ill13/SpeakLocal/assets/10509740/08816522-8614-4fd1-ba2a-df990a864248)
+
+
 
 ### 2023-09-15
 
