@@ -39,7 +39,12 @@ Finally enable the extension in the *session* tab
 
 ### 2024-02-05
 
-I'm not 100% happy with this answer, but it works for now
+If you get this error: 
+
+>*AttributeError: module 'ffmpeg' has no attribute 'input'*
+>
+Open the command line virtual environment and enter the following:
+
 
 ```
 pip uninstall ffmpeg
@@ -49,6 +54,7 @@ pip install ffmpeg-python
 On Windows 10, make sure *ffmpeg.exe* in in your path
 ![image](https://github.com/ill13/SpeakLocal/assets/10509740/08816522-8614-4fd1-ba2a-df990a864248)
 
+Restart Ooba and you should be all set.
 
 
 ### 2023-09-15
